@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="drawerTitles">
+		<item>اخبار</item>
+		<item>سازمان گردشگری</item>
+		<item>تماس با ما</item>
+		<item>درباره ما</item>
+		<item>خروج</item>
+	</string-array>
+
+	<string-array name="drawerIcons" translatable="false">
+		<item>@drawable/ic_news</item>
+		<item>@drawable/ic_gardeshgary</item>
+		<item>@drawable/ic_contact</item>
+		<item>@drawable/ic_about</item>
+		<item>@drawable/ic_close</item>
+	</string-array>
+
+</resources>

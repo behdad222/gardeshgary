@@ -7,11 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
 import gardeshgary.khozestan.R;
+import gardeshgary.khozestan.model.Item;
+import gardeshgary.khozestan.view.fragments.NewsFragment;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
+	private List<Item> items;
+	private NewsFragment newsFragment;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+	public NewsAdapter(NewsFragment newsFragment, List<Item> items) {
+		this.items = items;
+		this.newsFragment = newsFragment;
+	}
+
+	public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public AppCompatTextView title;
         public AppCompatTextView description;
         public AppCompatTextView date;
@@ -23,10 +36,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             description = (AppCompatTextView) itemView.findViewById(R.id.description);
             date = (AppCompatTextView) itemView.findViewById(R.id.date);
 			image = (AppCompatImageView) itemView.findViewById(R.id.image);
+			view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
+			newsFragment.selectNews(getAdapterPosition());
         }
     }
 
@@ -41,13 +56,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-		holder.title.setText("خبر شماره " + position);
-		holder.description.setText("توضیح خبر شماره" + position);
-		holder.date.setText("۱۳۹۴/۱/۱۲");
+		holder.title.setText(items.get(position).getTitle());
+		holder.description.setText(items.get(position).getDescription());
+		holder.date.setText(items.get(position).getPubDate());
+
+		if (!items.get(position).getImage().equals("")) {
+			Picasso.with(newsFragment.getContext())
+					.load(items.get(position).getImage())
+					.into(holder.image);
+		}
     }
 
     @Override
     public int getItemCount() {
-        return 50;
+        return items.size();
     }
 }

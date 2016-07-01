@@ -25,6 +25,7 @@ import gardeshgary.khozestan.adapters.DrawerAdapter;
 import gardeshgary.khozestan.view.fragments.AboutFragment;
 import gardeshgary.khozestan.view.fragments.ContactUsFragment;
 import gardeshgary.khozestan.view.fragments.GardeshgaryFragment;
+import gardeshgary.khozestan.view.fragments.NewsDetailFragment;
 import gardeshgary.khozestan.view.fragments.NewsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,10 +38,12 @@ public class MainActivity extends AppCompatActivity {
 			NewsFragment.class,
 			GardeshgaryFragment.class,
 			ContactUsFragment.class,
-			AboutFragment.class
+			AboutFragment.class,
+			NewsDetailFragment.class
 	};
 
 	private static final int NEWS = 1;
+	public static final int NEWS_DETAIL = 7;
 	private static final int GARDESHGARY = 2;
 	private static final int CONTACT_US = 3;
 	private static final int ABOUT = 4;
@@ -115,13 +118,13 @@ public class MainActivity extends AppCompatActivity {
 		drawerLayout.addDrawerListener(drawerToggle);
 		drawerToggle.syncState();
 
-		selectItem(DEFAULT);
+		selectItem(DEFAULT, null);
 	}
 
 	@Override
 	public void onBackPressed() {
 		if (menuPosition != DEFAULT) {
-			selectItem(DEFAULT);
+			selectItem(DEFAULT, null);
 		} else {
 			finish();
 		}
@@ -147,35 +150,39 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	public void selectItem(int item) {
+	public void selectItem(int item, Fragment fragment) {
 		if (item == EXIT) {
 			finish();
 			return;
 		}
 
 //		beforeMenuChange(item);
-		if (menuPosition != item) {
-			try {
-				getSupportFragmentManager()
-						.beginTransaction()
-						.replace(
-								R.id.fragment_holder,
-								(Fragment) fragments[item].newInstance(),
-								fragments[item].getName()
-						).commit();
-			} catch (Exception e) {
-				e.printStackTrace();
+		if (item != NEWS_DETAIL) {
+			if (menuPosition != item) {
+				try {
+					getSupportFragmentManager()
+							.beginTransaction()
+							.replace(
+									R.id.fragment_holder,
+									(Fragment) fragments[item].newInstance(),
+									fragments[item].getName()
+							).addToBackStack(null).commit();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				menuPosition = item;
 			}
+		} else {
 			menuPosition = item;
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_holder, fragment, "").addToBackStack(null).commit();
 		}
-
 		adapter.setSelectedItem(item);
 
 		drawerLayout.closeDrawers();
 	}
 
 	public void onClickItem(int position) {
-		selectItem(position);
+		selectItem(position, null);
 	}
 
 	public void changeAppLanguage(Context context) {

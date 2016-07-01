@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 	private static final int GARDESHGARY = 2;
 	private static final int CONTACT_US = 3;
 	private static final int ABOUT = 4;
-	private static final int EXIT = 6;
+	private static final int EXIT = 5;
 
 	// Default selected fragment
 	private static final int DEFAULT = NEWS;

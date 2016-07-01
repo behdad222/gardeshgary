@@ -3,9 +3,9 @@
 
 	<string-array name="drawerTitles">
 		<item>اخبار</item>
-		<item>سازمان گردشگری</item>
+		<item>درباره اداره کل</item>
 		<item>تماس با ما</item>
-		<item>درباره ما</item>
+		<item>درباره برنامه</item>
 		<item>خروج</item>
 	</string-array>
 
